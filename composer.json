@@ -1,9 +1,9 @@
 {
-	"name": "cakedc/search",
+	"name": "japache/cakedc-search",
 	"description": "Search Plugin for CakePHP",
 	"type": "cakephp-plugin",
 	"keywords": ["cakephp", "search", "prg", "post-redirect-get", "filter"],
-	"homepage": "http://github.com/CakeDC/search",
+	"homepage": "http://github.com/JaPache/cakedc-search",
 	"license": "MIT",
 	"authors": [
 		{
@@ -13,15 +13,10 @@
 		}
 	],
 	"support": {
-		"email": "team@cakedc.com",
-		"issues": "https://github.com/CakeDC/search/issues",
-		"forum": "http://stackoverflow.com/tags/cakedc",
-		"wiki": "https://github.com/CakeDC/search/blob/master/Docs/Home.md",
-		"irc": "irc://irc.freenode.org/cakephp",
-		"source": "https://github.com/CakeDC/search"
+		"source": "https://github.com/JaPache/cakedc-search"
 	},
 	"require": {
-		"php": ">=5.4.16",
+		"php": ">=7.2",
 		"cakephp/plugin-installer": "*"
 	},
 	"require-dev": {
