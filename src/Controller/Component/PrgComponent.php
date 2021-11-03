@@ -181,7 +181,7 @@ class PrgComponent extends Component {
 		}
 		extract(Hash::merge($this->_config['presetForm'], $options));
 
-		$args = $this->controller->request->query;
+		$args = $this->controller->request->getQuery();
 
 		$parsedParams = [];
 		$data = [];
@@ -336,7 +336,7 @@ class PrgComponent extends Component {
 			}
 
 			if ($valid) {
-				$params = $this->controller->request->query;
+				$params = $this->controller->request->getQuery();
 				if ($keepPassed) {
 					$params = array_merge($this->controller->request->params['pass'], $params);
 					$params = $this->exclude($params, $excludedParams);
@@ -344,7 +344,7 @@ class PrgComponent extends Component {
 
 				$this->serializeParams($searchParams);
 
-				$searchParams = array_merge($this->controller->request->query, $searchParams);
+				$searchParams = array_merge($this->controller->request->getQuery(), $searchParams);
 				$searchParams = $this->exclude($searchParams, $excludedParams);
 
 				if ($filterEmpty) {
@@ -368,7 +368,7 @@ class PrgComponent extends Component {
 			} else {
 				$this->controller->Flash->error(__d('search', 'Please correct the errors below.'));
 			}
-		} elseif (!empty($this->controller->request->query)) {
+		} elseif (!empty($this->controller->request->getQuery())) {
 			$this->presetForm(['table' => $tableName, 'formName' => $formName]);
 		}
 	}
