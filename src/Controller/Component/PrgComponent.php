@@ -147,7 +147,7 @@ class PrgComponent extends Component {
 			$this->commonProcess();
 		}
 		if (is_array($autoProcess)) {
-			$action = $this->controller->request->action;
+			$action = $this->controller->request->getParam('action');
 			if (isset($autoProcess[$action])) {
 				$this->commonProcess($autoProcess[$action][0], $autoProcess[$action][1]);
 			}
@@ -219,7 +219,7 @@ class PrgComponent extends Component {
 		}
 
 		if ($formName) {
-			$this->controller->request->data[$formName] = $data;
+			$this->controller->request = $this->controller->request->withData($formName, $data);
 		} else {
 			$this->controller->request->data = $data;
 		}
@@ -315,18 +315,18 @@ class PrgComponent extends Component {
 		}
 
 		if (empty($action)) {
-			$action = $this->controller->request->params['action'];
+			$action = $this->controller->request->getParam('action');
 		}
 
-		if (!empty($formName) && isset($this->controller->request->data[$formName])) {
-			$searchParams = $this->controller->request->data[$formName];
-		} elseif (isset($this->controller->request->data[$tableName])) {
-			$searchParams = $this->controller->request->data[$tableName];
+		if (!empty($formName) && $this->controller->request->getdata($formName) !== null) {
+			$searchParams = $this->controller->request->getdata($formName);
+		} elseif ($this->controller->request->getdata($tableName) != null) {
+			$searchParams = $this->controller->request->getdata($tableName);
 			if (empty($formName)) {
 				$formName = $tableName;
 			}
 		} else {
-			$searchParams = $this->controller->request->data;
+			$searchParams = $this->controller->request->getParsedBody();
 		}
 
 		if (!empty($searchParams)) {
@@ -338,7 +338,7 @@ class PrgComponent extends Component {
 			if ($valid) {
 				$params = $this->controller->request->getQuery();
 				if ($keepPassed) {
-					$params = array_merge($this->controller->request->params['pass'], $params);
+					$params = array_merge($this->controller->request->getParam('pass'), $params);
 					$params = $this->exclude($params, $excludedParams);
 				}
 
@@ -359,8 +359,8 @@ class PrgComponent extends Component {
 				$params['action'] = $action;
 
 				foreach ($allowedParams as $key) {
-					if (isset($this->controller->request->params[$key])) {
-						$params[$key] = $this->controller->request->params[$key];
+					if ($this->controller->request->getParam($key) !== null) {
+						$params[$key] = $this->controller->request->getParam($key);
 					}
 				}
 
